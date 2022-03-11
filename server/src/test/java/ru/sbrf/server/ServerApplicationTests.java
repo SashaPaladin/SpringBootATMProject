@@ -1,10 +1,10 @@
-package ru.sbrf.springbootatmproject;
+package ru.sbrf.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootAtmProjectApplicationTests {
+class ServerApplicationTests {
 
     @Test
     void contextLoads() {

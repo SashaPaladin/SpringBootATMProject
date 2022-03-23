@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sbrf.client.service.ATMService;
-import ru.sbrf.common.messages.ProcessingResponse;
+import ru.sbrf.common.messages.BalanceResponse;
 
 @RestController
 public class ATMController {
@@ -21,17 +21,17 @@ public class ATMController {
     }
 
     @GetMapping("/balance")
-    public ProcessingResponse getCardBalance(@RequestParam Long number, @RequestParam Integer pin) {
+    public BalanceResponse getCardBalance(@RequestParam Long number, @RequestParam Integer pin) {
         return atmService.getCardBalance(number, pin);
     }
 
     @GetMapping("/replenishment")
-    public ProcessingResponse cardReplenishment(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
-        return atmService.cardReplenishment(number, pin, value);
+    public BalanceResponse cardReplenishment(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
+        return atmService.replenishCard(number, pin, value);
     }
 
     @GetMapping("/withdrawal")
-    public ProcessingResponse cardWithdrawal(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
-        return atmService.cardWithdrawal(number, pin, value);
+    public BalanceResponse cardWithdrawal(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
+        return atmService.withdrawCard(number, pin, value);
     }
 }

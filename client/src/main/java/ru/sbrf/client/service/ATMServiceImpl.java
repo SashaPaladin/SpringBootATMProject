@@ -10,13 +10,12 @@ import org.springframework.web.client.RestTemplate;
 import ru.sbrf.client.dto.*;
 import ru.sbrf.common.messages.AuthenticationRequest;
 import ru.sbrf.common.messages.AuthenticationResponse;
-import ru.sbrf.common.messages.ProcessingRequest;
-import ru.sbrf.common.messages.ProcessingResponse;
+import ru.sbrf.common.messages.BalanceRequest;
+import ru.sbrf.common.messages.BalanceResponse;
 
 @Service
 public class ATMServiceImpl implements ATMService {
 
-    private static final Logger log = LoggerFactory.getLogger(ATMServiceImpl.class);
     private static final String SERVER_URL = "http://localhost:8080/api/";
     private static final String BALANCE = "balance";
     private static final String REPLENISHMENT = "replenishment";
@@ -30,43 +29,42 @@ public class ATMServiceImpl implements ATMService {
         this.restTemplate = restTemplate;
     }
 
-    private ProcessingResponse sendWithHeader(ProcessingRequest request) {
+    private BalanceResponse sendWithHeader(BalanceRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(atmData.getToken());
-        HttpEntity<ProcessingRequest> requestEntity = new HttpEntity<>(request, headers);
+        HttpEntity<BalanceRequest> requestEntity = new HttpEntity<>(request, headers);
         return restTemplate.exchange(
-                SERVER_URL + request.getOperationType(),
+                SERVER_URL + BALANCE,
                 HttpMethod.POST,
                 requestEntity,
-                ProcessingResponse.class
+                BalanceResponse.class
         ).getBody();
     }
 
     @Override
     public void authorizationAtm() {
         AuthenticationResponse response = restTemplate.postForEntity(
-                        "http://localhost:8080/auth",
+                "http://localhost:8080/auth",
                         new AuthenticationRequest(atmData.getAtmUUID(), atmData.getPassword()),
                         AuthenticationResponse.class)
                 .getBody();
         if (response != null) {
             atmData.setToken(response.getToken());
-            log.info("Токен получен: " + atmData.getToken());
         }
     }
 
     @Override
-    public ProcessingResponse getCardBalance(Long numberCard, Integer pin) {
-        return sendWithHeader(new ProcessingRequest(numberCard, pin, BALANCE));
+    public BalanceResponse getCardBalance(Long numberCard, Integer pin) {
+        return sendWithHeader(new BalanceRequest(numberCard, pin, BALANCE));
     }
 
     @Override
-    public ProcessingResponse cardReplenishment(Long numberCard, Integer pin, Long value) {
-        return sendWithHeader(new ProcessingRequest(numberCard, pin, REPLENISHMENT, value));
+    public BalanceResponse replenishCard(Long numberCard, Integer pin, Long value) {
+        return sendWithHeader(new BalanceRequest(numberCard, pin, REPLENISHMENT, value));
     }
 
     @Override
-    public ProcessingResponse cardWithdrawal(Long numberCard, Integer pin, Long value) {
-        return sendWithHeader(new ProcessingRequest(numberCard, pin, WITHDRAWAL, value));
+    public BalanceResponse withdrawCard(Long numberCard, Integer pin, Long value) {
+        return sendWithHeader(new BalanceRequest(numberCard, pin, WITHDRAWAL, value));
     }
 }

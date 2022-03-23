@@ -9,7 +9,7 @@ import ru.sbrf.common.messages.AuthenticationResponse;
 import ru.sbrf.server.service.AuthenticationService;
 
 @RestController
-@RequestMapping()
+@RequestMapping
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

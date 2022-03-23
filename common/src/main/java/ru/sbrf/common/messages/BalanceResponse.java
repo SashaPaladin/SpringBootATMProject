@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProcessingResponse {
+public class BalanceResponse {
 
     private String operationStatus;
     private Long balance;

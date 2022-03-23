@@ -3,9 +3,7 @@ package ru.sbrf.server.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "cards")
 @Getter
@@ -13,12 +11,11 @@ import javax.persistence.ManyToOne;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Card {
-
-    @Id
+public class Card extends BaseEntity {
+    @Column(name = "number")
     private Long number;
+    @Column(name = "pin")
     private Integer pin;
-
-    @ManyToOne
-    private Account account;
+    @Column(name = "balance")
+    private Long balance;
 }

@@ -15,7 +15,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class ATM extends BaseEntity {
 
-    @Column(unique = true)
+    @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "password")
     private String password;
 }

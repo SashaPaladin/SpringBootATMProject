@@ -2,9 +2,7 @@ package ru.sbrf.client.service;
 
 import ru.sbrf.common.messages.BalanceResponse;
 
-public interface ATMService {
-
-    void authorizationAtm();
+public interface BalanceService {
 
     BalanceResponse getCardBalance(Long numberCard, Integer pin);
 

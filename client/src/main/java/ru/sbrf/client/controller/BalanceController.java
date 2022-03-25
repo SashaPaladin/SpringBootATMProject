@@ -3,35 +3,30 @@ package ru.sbrf.client.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sbrf.client.service.ATMService;
+import ru.sbrf.client.service.BalanceService;
 import ru.sbrf.common.messages.BalanceResponse;
 
 @RestController
-public class ATMController {
+public class BalanceController {
 
-    private final ATMService atmService;
+    private final BalanceService balanceService;
 
-    public ATMController(ATMService atmService) {
-        this.atmService = atmService;
-    }
-
-    @GetMapping("/auth")
-    public void authorizationAtm() {
-        atmService.authorizationAtm();
+    public BalanceController(BalanceService balanceService) {
+        this.balanceService = balanceService;
     }
 
     @GetMapping("/balance")
     public BalanceResponse getCardBalance(@RequestParam Long number, @RequestParam Integer pin) {
-        return atmService.getCardBalance(number, pin);
+        return balanceService.getCardBalance(number, pin);
     }
 
     @GetMapping("/replenishment")
     public BalanceResponse cardReplenishment(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
-        return atmService.replenishCard(number, pin, value);
+        return balanceService.replenishCard(number, pin, value);
     }
 
     @GetMapping("/withdrawal")
     public BalanceResponse cardWithdrawal(@RequestParam Long number, @RequestParam Integer pin, @RequestParam Long value) {
-        return atmService.withdrawCard(number, pin, value);
+        return balanceService.withdrawCard(number, pin, value);
     }
 }

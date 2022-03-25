@@ -6,8 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sbrf.client.config.ATMProperties;
-import ru.sbrf.common.messages.AuthenticationRequest;
-import ru.sbrf.common.messages.AuthenticationResponse;
 import ru.sbrf.common.messages.BalanceRequest;
 import ru.sbrf.common.messages.BalanceResponse;
 

@@ -3,7 +3,8 @@ package ru.sbrf.server.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity(name = "cards")
 @Getter
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card extends BaseEntity {
+
     @Column(name = "number")
     private Long number;
     @Column(name = "pin")

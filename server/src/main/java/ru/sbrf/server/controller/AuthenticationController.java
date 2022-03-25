@@ -18,13 +18,13 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/register")
-    public void registerUser(@RequestBody AuthenticationRequest request) {
-        authenticationService.register(request);
-    }
-
     @PostMapping("/auth")
     public AuthenticationResponse auth(@RequestBody AuthenticationRequest request) {
         return authenticationService.auth(request);
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody AuthenticationRequest request) {
+        authenticationService.register(request);
     }
 }

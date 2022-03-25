@@ -16,6 +16,8 @@ import java.util.Optional;
 @SpringBootTest
 public class AuthenticationServiceTest {
 
+    private final AuthenticationRequest request = new AuthenticationRequest("username", "password");
+    private final Optional<ATM> userFromDb = Optional.of(new ATM("username", "password"));
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
     @Autowired
@@ -23,8 +25,9 @@ public class AuthenticationServiceTest {
     @MockBean
     private ATMRepository atmRepository;
 
-    private final AuthenticationRequest request = new AuthenticationRequest("username", "password");
-    private final Optional<ATM> userFromDb = Optional.of(new ATM("username", "password"));
+    @Test
+    void findByUsernameTest() {
+    }
 
     @Test
     public void authTest() {

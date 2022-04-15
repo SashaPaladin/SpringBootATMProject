@@ -8,7 +8,7 @@ import ru.sbrf.common.messages.BalanceRequest;
 import ru.sbrf.common.messages.BalanceResponse;
 import ru.sbrf.server.service.BalanceService;
 
-@RestController()
+@RestController
 @RequestMapping("/api")
 public class BalanceController {
 

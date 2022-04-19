@@ -11,6 +11,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static final String SERVER_AUTH_URL = "http://localhost:8080/auth";
 
+    private static final String SUCCESSFUL_AUTHORIZATION = "Авторизация успешна";
+
+    private static final String FAILED_AUTHORIZATION = "Произошла ошибка авторизации";
+
     private final ATMProperties atmProperties;
     private final RestTemplate restTemplate;
 
@@ -20,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void authenticate() {
+    public String authenticate() {
         AuthenticationResponse response = restTemplate.postForEntity(
                         SERVER_AUTH_URL,
                         new AuthenticationRequest(atmProperties.getUUID(), atmProperties.getPassword()),
@@ -28,6 +32,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .getBody();
         if (response != null) {
             atmProperties.setToken(response.getToken());
+            return SUCCESSFUL_AUTHORIZATION;
+        } else {
+            return FAILED_AUTHORIZATION;
         }
     }
 }

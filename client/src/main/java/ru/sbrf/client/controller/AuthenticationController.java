@@ -14,7 +14,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/auth")
-    public void auth() {
-        authenticationService.authenticate();
+    public String auth() {
+        return authenticationService.authenticate();
     }
 }

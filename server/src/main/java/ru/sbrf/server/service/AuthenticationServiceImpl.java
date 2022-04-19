@@ -15,6 +15,12 @@ import java.util.Optional;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+    private static final String USER_NOT_FOUND = "User not found";
+    private static final String INVALID_PASSWORD = "Invalid password";
+    private static final String EMPTY_PASSWORD = "Password cannot be empty";
+    private static final String USER_ALREADY_REGISTERED = "Username is already registered";
+
+
     private final ATMRepository atmRepository;
     private final JwtProvider jwtProvider;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -33,24 +39,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse auth(AuthenticationRequest request) {
         ATM atm = findByUsername(request.getUsername())
-                .orElseThrow(() -> new AuthenticationException("User not found"));
+                .orElseThrow(() -> new AuthenticationException(USER_NOT_FOUND));
         if (passwordEncoder.matches(request.getPassword(), atm.getPassword())) {
             return new AuthenticationResponse(jwtProvider.generateToken(request.getUsername()));
         } else {
-            throw new AuthenticationException("Invalid password");
+            throw new AuthenticationException(INVALID_PASSWORD);
         }
     }
 
     @Transactional
     @Override
     public void register(AuthenticationRequest request) {
-        if (request.getPassword() == null) throw new AuthenticationException("Password cannot be empty");
+        if (request.getPassword() == null) throw new AuthenticationException(EMPTY_PASSWORD);
         ATM newATM = new ATM(request.getUsername(), request.getPassword());
         if (findByUsername(newATM.getUsername()).isEmpty()) {
             newATM.setPassword(passwordEncoder.encode(newATM.getPassword()));
             atmRepository.save(newATM);
         } else {
-            throw new AuthenticationException("Username is already registered");
+            throw new AuthenticationException(USER_ALREADY_REGISTERED);
         }
     }
 }

@@ -17,7 +17,7 @@ import java.util.Queue;
 @Slf4j
 public class KafkaServiceImpl implements KafkaService {
 
-    private static final long TIMEOUT_MILLISECONDS = 150;
+    private static final long TIMEOUT_MILLISECONDS = 300;
     private static final String BALANCE = "balance";
     private static final String REPLENISHMENT = "replenishment";
     private static final String WITHDRAWAL = "withdrawal";
